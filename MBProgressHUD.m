@@ -420,6 +420,16 @@
 	}
 }
 
+- (void)hideAnimated
+{
+    [self hide:YES];
+}
+
+- (void)hideAfterDelay:(NSTimeInterval)interval
+{
+    [self performSelector:@selector(hideAnimated) withObject:nil afterDelay:interval];
+}
+
 - (void)hide:(BOOL)animated {
 	useAnimation = animated;
 	

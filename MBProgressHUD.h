@@ -306,6 +306,7 @@ typedef enum {
  * animations while disappearing.
  */
 - (void)hide:(BOOL)animated;
+- (void)hideAfterDelay:(NSTimeInterval)interval;
 
 /** 
  * Shows the HUD while a background task is executing in a new thread, then hides the HUD.
