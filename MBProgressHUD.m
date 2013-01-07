@@ -195,6 +195,10 @@
 #pragma mark Class methods
 
 + (MBProgressHUD *)showHUDAddedTo:(UIView *)view animated:(BOOL)animated {
+	// If the view is nil, no need to make a HUD
+	if (view == nil)
+		return nil;
+	
 	MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
 	[view addSubview:hud];
 	[hud show:animated];
@@ -227,18 +231,16 @@
 }
 
 - (id)initWithView:(UIView *)view {
-	// Let's check if the view is nil (this is a common error when using the windw initializer above)
-	if (!view) {
-		return nil;
-	}
 	self = [self initWithFrame:view.bounds];
-	// We need to take care of rotation ourselfs if we're adding the HUD to a window
-	if ([view isKindOfClass:[UIWindow class]]) {
-		[self setTransformForCurrentOrientation:NO];
+	if (self)
+	{
+		// We need to take care of rotation ourselfs if we're adding the HUD to a window
+		if ([view isKindOfClass:[UIWindow class]]) {
+			[self setTransformForCurrentOrientation:NO];
+		}
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) 
+													 name:UIDeviceOrientationDidChangeNotification object:nil];
 	}
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) 
-												 name:UIDeviceOrientationDidChangeNotification object:nil];
-	
 	return self;
 }
 
