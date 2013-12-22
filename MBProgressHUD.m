@@ -5,6 +5,7 @@
 //
 
 #import "MBProgressHUD.h"
+#include <tgmath.h>
 
 @interface MBProgressHUD ()
 
@@ -24,8 +25,8 @@
 - (void)cleanUp;
 
 @property (retain) UIView *indicator;
-@property (assign) float width;
-@property (assign) float height;
+@property (assign) CGFloat width;
+@property (assign) CGFloat height;
 @property (retain) NSTimer *graceTimer;
 @property (retain) NSTimer *minShowTimer;
 @property (retain) NSDate *showStarted;
@@ -120,7 +121,7 @@
 	return detailsLabelText;
 }
 
-- (void)setProgress:(float)newProgress {
+- (void)setProgress:(CGFloat)newProgress {
     progress = newProgress;
 	
     // Update display ony if showing the determinate progress view
@@ -135,7 +136,7 @@
     }
 }
 
-- (float)progress {
+- (CGFloat)progress {
 	return progress;
 }
 
@@ -308,8 +309,8 @@
     self.height = indFrame.size.height + 2 * margin;
 	
     // Position the indicator
-    indFrame.origin.x = floorf((frame.size.width - indFrame.size.width) / 2) + self.xOffset;
-    indFrame.origin.y = floorf((frame.size.height - indFrame.size.height) / 2) + self.yOffset;
+    indFrame.origin.x = floor((frame.size.width - indFrame.size.width) / 2) + self.xOffset;
+    indFrame.origin.y = floor((frame.size.height - indFrame.size.height) / 2) + self.yOffset;
     indicator.frame = indFrame;
 	
     // Add label if label text was set
@@ -318,8 +319,8 @@
         CGSize dims = [self.labelText sizeWithFont:self.labelFont];
 		
         // Compute label dimensions based on font metrics if size is larger than max then clip the label width
-        float lHeight = dims.height;
-        float lWidth;
+        CGFloat lHeight = dims.height;
+        CGFloat lWidth;
         if (dims.width <= (frame.size.width - 2 * margin)) {
             lWidth = dims.width;
         }
@@ -343,12 +344,12 @@
         self.height = self.height + lHeight + PADDING;
 		
         // Move indicator to make room for the label
-        indFrame.origin.y -= (floorf(lHeight / 2 + PADDING / 2));
+        indFrame.origin.y -= (floor(lHeight / 2 + PADDING / 2));
         indicator.frame = indFrame;
 		
         // Set the label position and dimensions
-        CGRect lFrame = CGRectMake(floorf((frame.size.width - lWidth) / 2) + xOffset,
-                                   floorf(indFrame.origin.y + indFrame.size.height + PADDING),
+        CGRect lFrame = CGRectMake(floor((frame.size.width - lWidth) / 2) + xOffset,
+                                   floor(indFrame.origin.y + indFrame.size.height + PADDING),
                                    lWidth, lHeight);
         label.frame = lFrame;
 		
@@ -384,15 +385,15 @@
             self.height = self.height + lHeight + PADDING;
 			
             // Move indicator to make room for the new label
-            indFrame.origin.y -= (floorf(lHeight / 2 + PADDING / 2));
+            indFrame.origin.y -= (floor(lHeight / 2 + PADDING / 2));
             indicator.frame = indFrame;
 			
             // Move first label to make room for the new label
-            lFrame.origin.y -= (floorf(lHeight / 2 + PADDING / 2));
+            lFrame.origin.y -= (floor(lHeight / 2 + PADDING / 2));
             label.frame = lFrame;
 			
             // Set label position and dimensions
-            CGRect lFrameD = CGRectMake(floorf((frame.size.width - lWidth) / 2) + xOffset,
+            CGRect lFrameD = CGRectMake(floor((frame.size.width - lWidth) / 2) + xOffset,
                                         lFrame.origin.y + lFrame.size.height + PADDING, lWidth, lHeight);
             detailsLabel.frame = lFrameD;
 			
@@ -598,7 +599,7 @@
         //Gradient center
         CGPoint gradCenter= CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         //Gradient radius
-        float gradRadius = MIN(self.bounds.size.width , self.bounds.size.height) ;
+        CGFloat gradRadius = MIN(self.bounds.size.width , self.bounds.size.height) ;
         //Gradient draw
         CGContextDrawRadialGradient (context, gradient, gradCenter,
                                      0, gradCenter, gradRadius,
@@ -609,18 +610,18 @@
     // Center HUD
     CGRect allRect = self.bounds;
     // Draw rounded HUD bacgroud rect
-    CGRect boxRect = CGRectMake(roundf((allRect.size.width - self.width) / 2) + self.xOffset,
-                                roundf((allRect.size.height - self.height) / 2) + self.yOffset, self.width, self.height);
+    CGRect boxRect = CGRectMake(round((allRect.size.width - self.width) / 2) + self.xOffset,
+                                round((allRect.size.height - self.height) / 2) + self.yOffset, self.width, self.height);
 	// Corner radius
-	float radius = 10.0f;
+	CGFloat radius = 10.0f;
 	
     CGContextBeginPath(context);
     CGContextSetGrayFillColor(context, 0.0f, self.opacity);
     CGContextMoveToPoint(context, CGRectGetMinX(boxRect) + radius, CGRectGetMinY(boxRect));
-    CGContextAddArc(context, CGRectGetMaxX(boxRect) - radius, CGRectGetMinY(boxRect) + radius, radius, 3 * (float)M_PI / 2, 0, 0);
-    CGContextAddArc(context, CGRectGetMaxX(boxRect) - radius, CGRectGetMaxY(boxRect) - radius, radius, 0, (float)M_PI / 2, 0);
-    CGContextAddArc(context, CGRectGetMinX(boxRect) + radius, CGRectGetMaxY(boxRect) - radius, radius, (float)M_PI / 2, (float)M_PI, 0);
-    CGContextAddArc(context, CGRectGetMinX(boxRect) + radius, CGRectGetMinY(boxRect) + radius, radius, (float)M_PI, 3 * (float)M_PI / 2, 0);
+    CGContextAddArc(context, CGRectGetMaxX(boxRect) - radius, CGRectGetMinY(boxRect) + radius, radius, 3 * (CGFloat)M_PI / 2, 0, 0);
+    CGContextAddArc(context, CGRectGetMaxX(boxRect) - radius, CGRectGetMaxY(boxRect) - radius, radius, 0, (CGFloat)M_PI / 2, 0);
+    CGContextAddArc(context, CGRectGetMinX(boxRect) + radius, CGRectGetMaxY(boxRect) - radius, radius, (CGFloat)M_PI / 2, (CGFloat)M_PI, 0);
+    CGContextAddArc(context, CGRectGetMinX(boxRect) + radius, CGRectGetMinY(boxRect) + radius, radius, (CGFloat)M_PI, 3 * (CGFloat)M_PI / 2, 0);
     CGContextClosePath(context);
     CGContextFillPath(context);
 }
@@ -628,7 +629,7 @@
 #pragma mark -
 #pragma mark Manual oritentation change
 
-#define RADIANS(degrees) ((degrees * (float)M_PI) / 180.0f)
+#define RADIANS(degrees) ((degrees * (CGFloat)M_PI) / 180.0f)
 
 - (void)deviceOrientationDidChange:(NSNotification *)notification { 
 	if (!self.superview) {
@@ -679,11 +680,11 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (float)progress {
+- (CGFloat)progress {
     return _progress;
 }
 
-- (void)setProgress:(float)progress {
+- (void)setProgress:(CGFloat)progress {
     _progress = progress;
     [self setNeedsDisplay];
 }
@@ -724,8 +725,8 @@
     // Draw progress
     CGPoint center = CGPointMake(allRect.size.width / 2, allRect.size.height / 2);
     CGFloat radius = (allRect.size.width - 4) / 2;
-    CGFloat startAngle = - ((float)M_PI / 2); // 90 degrees
-    CGFloat endAngle = (self.progress * 2 * (float)M_PI) + startAngle;
+    CGFloat startAngle = - ((CGFloat)M_PI / 2); // 90 degrees
+    CGFloat endAngle = (self.progress * 2 * (CGFloat)M_PI) + startAngle;
     CGContextSetRGBFillColor(context, 1.0f, 1.0f, 1.0f, 1.0f); // white
     CGContextMoveToPoint(context, center.x, center.y);
     CGContextAddArc(context, center.x, center.y, radius, startAngle, endAngle, 0);

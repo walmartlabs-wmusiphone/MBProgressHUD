@@ -78,19 +78,19 @@ typedef enum {
 	id objectForExecution;
 	BOOL useAnimation;
 	
-    float yOffset;
-    float xOffset;
+    CGFloat yOffset;
+    CGFloat xOffset;
 	
-	float width;
-	float height;
+	CGFloat width;
+	CGFloat height;
 	
-	float margin;
+	CGFloat margin;
 	
 	BOOL dimBackground;
 	
 	BOOL taskInProgress;
-	float graceTime;
-	float minShowTime;
+	CGFloat graceTime;
+	CGFloat minShowTime;
 	NSTimer *graceTimer;
 	NSTimer *minShowTimer;
 	NSDate *showStarted;
@@ -99,12 +99,12 @@ typedef enum {
 	UILabel *label;
 	UILabel *detailsLabel;
 	
-	float progress;
+	CGFloat progress;
 	
 	id<MBProgressHUDDelegate> delegate;
 	NSString *labelText;
 	NSString *detailsLabelText;
-	float opacity;
+	CGFloat opacity;
 	UIFont *labelFont;
 	UIFont *detailsLabelFont;
 	
@@ -202,24 +202,24 @@ typedef enum {
 /** 
  * The opacity of the HUD window. Defaults to 0.9 (90% opacity). 
  */
-@property (assign) float opacity;
+@property (assign) CGFloat opacity;
 
 /** 
  * The x-axis offset of the HUD relative to the centre of the superview. 
  */
-@property (assign) float xOffset;
+@property (assign) CGFloat xOffset;
 
 /** 
  * The y-ayis offset of the HUD relative to the centre of the superview. 
  */
-@property (assign) float yOffset;
+@property (assign) CGFloat yOffset;
 
 /**
  * The amounth of space between the HUD edge and the HUD elements (labels, indicators or custom views).
  *
  * Defaults to 20.0
  */
-@property (assign) float margin;
+@property (assign) CGFloat margin;
 
 /** 
  * Cover the HUD background view with a radial gradient. 
@@ -235,7 +235,7 @@ typedef enum {
  * Grace time functionality is only supported when the task status is known!
  * @see taskInProgress
  */
-@property (assign) float graceTime;
+@property (assign) CGFloat graceTime;
 
 
 /**
@@ -243,7 +243,7 @@ typedef enum {
  * This avoids the problem of the HUD being shown and than instantly hidden.
  * Defaults to 0 (no minimum show time).
  */
-@property (assign) float minShowTime;
+@property (assign) CGFloat minShowTime;
 
 /**
  * Indicates that the executed operation is in progress. Needed for correct graceTime operation.
@@ -274,7 +274,7 @@ typedef enum {
 /** 
  * The progress of the progress indicator, from 0.0 to 1.0. Defaults to 0.0. 
  */
-@property (assign) float progress;
+@property (assign) CGFloat progress;
 
 
 /** 
@@ -354,13 +354,13 @@ typedef enum {
  */
 @interface MBRoundProgressView : UIView {
 @private
-    float _progress;
+    CGFloat _progress;
 }
 
 /**
  * Progress (0.0 to 1.0)
  */
-@property (nonatomic, assign) float progress;
+@property (nonatomic, assign) CGFloat progress;
 
 @end
 
