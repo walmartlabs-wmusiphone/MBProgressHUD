@@ -187,7 +187,7 @@
 
 - (void)myProgressTask {
     // This just increases the progress indicator in a loop
-    float progress = 0.0f;
+    CGFloat progress = 0.0f;
     while (progress < 1.0f) {
         progress += 0.01f;
         HUD.progress = progress;
@@ -201,7 +201,7 @@
     // Switch to determinate mode
     HUD.mode = MBProgressHUDModeDeterminate;
     HUD.labelText = @"Progress";
-    float progress = 0.0f;
+    CGFloat progress = 0.0f;
     while (progress < 1.0f)
     {
         progress += 0.01f;
@@ -231,7 +231,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
 	currentLength += [data length];
-	HUD.progress = currentLength / (float)expectedLength;
+	HUD.progress = currentLength / (CGFloat)expectedLength;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
