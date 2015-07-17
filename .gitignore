@@ -5,6 +5,7 @@ build/
 *.mode2v3
 *.perspectivev3
 xcuserdata/
+*.xccheckout
 
 # old skool
 .svn
@@ -16,3 +17,6 @@ profile
 # vim noise
 *~
 *.swp
+
+# AppCode noise
+.idea/
