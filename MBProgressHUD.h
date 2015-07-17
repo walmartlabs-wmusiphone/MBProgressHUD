@@ -325,7 +325,7 @@ typedef void (^MBProgressHUDCompletionBlock)();
 /** 
  * The opacity of the HUD window. Defaults to 0.8 (80% opacity). 
  */
-@property (assign) float opacity;
+@property (assign) CGFloat opacity;
 
 /**
  * The color of the HUD window. Defaults to black. If this property is set, color is set using
@@ -337,18 +337,18 @@ typedef void (^MBProgressHUDCompletionBlock)();
 /** 
  * The x-axis offset of the HUD relative to the centre of the superview. 
  */
-@property (assign) float xOffset;
+@property (assign) CGFloat xOffset;
 
 /** 
  * The y-axis offset of the HUD relative to the centre of the superview. 
  */
-@property (assign) float yOffset;
+@property (assign) CGFloat yOffset;
 
 /**
  * The amount of space between the HUD edge and the HUD elements (labels, indicators or custom views). 
  * Defaults to 20.0
  */
-@property (assign) float margin;
+@property (assign) CGFloat margin;
 
 /**
  * The corner radius for the HUD
@@ -370,14 +370,14 @@ typedef void (^MBProgressHUDCompletionBlock)();
  * Grace time functionality is only supported when the task status is known!
  * @see taskInProgress
  */
-@property (assign) float graceTime;
+@property (assign) CGFloat graceTime;
 
 /**
  * The minimum time (in seconds) that the HUD is shown. 
  * This avoids the problem of the HUD being shown and than instantly hidden.
  * Defaults to 0 (no minimum show time).
  */
-@property (assign) float minShowTime;
+@property (assign) CGFloat minShowTime;
 
 /**
  * Indicates that the executed operation is in progress. Needed for correct graceTime operation.
@@ -424,7 +424,7 @@ typedef void (^MBProgressHUDCompletionBlock)();
 /** 
  * The progress of the progress indicator, from 0.0 to 1.0. Defaults to 0.0. 
  */
-@property (assign) float progress;
+@property (assign) CGFloat progress;
 
 /**
  * The minimum size of the HUD bezel. Defaults to CGSizeZero (no minimum size).
@@ -471,7 +471,7 @@ typedef void (^MBProgressHUDCompletionBlock)();
 /**
  * Progress (0.0 to 1.0)
  */
-@property (nonatomic, assign) float progress;
+@property (nonatomic, assign) CGFloat progress;
 
 /**
  * Indicator progress color.
@@ -492,16 +492,16 @@ typedef void (^MBProgressHUDCompletionBlock)();
 
 @end
 
-
 /**
  * A flat bar progress view. 
  */
 @interface MBBarProgressView : UIView
 
+
 /**
  * Progress (0.0 to 1.0)
  */
-@property (nonatomic, assign) float progress;
+@property (nonatomic, assign) CGFloat progress;
 
 /**
  * Bar border line color.

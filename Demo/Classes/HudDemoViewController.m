@@ -305,7 +305,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
 	currentLength += [data length];
-	HUD.progress = currentLength / (float)expectedLength;
+	HUD.progress = currentLength / (CGFloat)expectedLength;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {

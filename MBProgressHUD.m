@@ -689,6 +689,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 			@"detailsLabelText", @"detailsLabelFont", @"detailsLabelColor", @"progress", @"activityIndicatorColor", nil];
 }
 
+#define RADIANS(degrees) ((degrees * (CGFloat)M_PI) / 180.0f)
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if (![NSThread isMainThread]) {
 		[self performSelectorOnMainThread:@selector(updateUIForKeypath:) withObject:keyPath waitUntilDone:NO];
