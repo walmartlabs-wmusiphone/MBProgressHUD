@@ -24,12 +24,11 @@
 - (void)launchExecution;
 - (void)cleanUp;
 
-@property (retain) UIView *indicator;
 @property (assign) CGFloat width;
 @property (assign) CGFloat height;
-@property (retain) NSTimer *graceTimer;
-@property (retain) NSTimer *minShowTimer;
-@property (retain) NSDate *showStarted;
+@property (nonatomic, strong) NSTimer *graceTimer;
+@property (nonatomic, strong) NSTimer *minShowTimer;
+@property (nonatomic, strong) NSDate *showStarted;
 
 @end
 
@@ -145,14 +144,12 @@
 
 - (void)updateLabelText:(NSString *)newText {
     if (labelText != newText) {
-        [labelText release];
         labelText = [newText copy];
     }
 }
 
 - (void)updateDetailsLabelText:(NSString *)newText {
     if (detailsLabelText != newText) {
-        [detailsLabelText release];
         detailsLabelText = [newText copy];
     }
 }
@@ -167,13 +164,13 @@
     }
 	
     if (mode == MBProgressHUDModeDeterminate) {
-        self.indicator = [[[MBRoundProgressView alloc] init] autorelease];
+        self.indicator = [[MBRoundProgressView alloc] init];
     }
     else if (mode == MBProgressHUDModeCustomView && self.customView != nil){
         self.indicator = self.customView;
     } else {
-		self.indicator = [[[UIActivityIndicatorView alloc]
-						   initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+		self.indicator = [[UIActivityIndicatorView alloc]
+						   initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         [(UIActivityIndicatorView *)indicator startAnimating];
 	}
 	
@@ -200,7 +197,7 @@
 	MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
 	[view addSubview:hud];
 	[hud show:animated];
-	return [hud autorelease];
+    return hud;
 }
 
 + (BOOL)hideHUDForView:(UIView *)view animated:(BOOL)animated {
@@ -284,17 +281,6 @@
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-    [indicator release];
-    [label release];
-    [detailsLabel release];
-    [labelText release];
-    [detailsLabelText release];
-	[graceTimer release];
-	[minShowTimer release];
-	[showStarted release];
-	[customView release];
-    [super dealloc];
 }
 
 #pragma mark -
@@ -486,8 +472,8 @@
 - (void)showWhileExecuting:(SEL)method onTarget:(id)target withObject:(id)object animated:(BOOL)animated {
 	
     methodForExecution = method;
-    targetForExecution = [target retain];
-    objectForExecution = [object retain];
+    self.targetForExecution = target;
+    self.objectForExecution = object;
 	
     // Launch execution in new thread
 	taskInProgress = YES;
@@ -498,16 +484,12 @@
 }
 
 - (void)launchExecution {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
     // Start executing the requested task
-    [targetForExecution performSelector:methodForExecution withObject:objectForExecution];
+    [self.targetForExecution performSelector:methodForExecution withObject:self.objectForExecution];
 	
     // Task completed, update view in main thread (note: view operations should
     // be done only in the main thread)
     [self performSelectorOnMainThread:@selector(cleanUp) withObject:nil waitUntilDone:NO];
-	
-    [pool release];
 }
 
 - (void)animationFinished:(NSString *)animationID finished:(BOOL)finished context:(void*)context {
@@ -520,11 +502,12 @@
     // If delegate was set make the callback
     self.alpha = 0.0f;
     
-	if(delegate != nil) {
-        if ([delegate respondsToSelector:@selector(hudWasHidden:)]) {
-            [delegate performSelector:@selector(hudWasHidden:) withObject:self];
+    @strongify(self.delegate, strongDelegate);
+	if(strongDelegate != nil) {
+        if ([strongDelegate respondsToSelector:@selector(hudWasHidden:)]) {
+            [strongDelegate performSelector:@selector(hudWasHidden:) withObject:self];
         } else if ([delegate respondsToSelector:@selector(hudWasHidden)]) {
-            [delegate performSelector:@selector(hudWasHidden)];
+            [strongDelegate performSelector:@selector(hudWasHidden)];
         }
 	}
 	
@@ -538,8 +521,8 @@
 	
 	self.indicator = nil;
 	
-    [targetForExecution release];
-    [objectForExecution release];
+    self.targetForExecution = nil;
+    self.objectForExecution = nil;
 	
     [self hide:useAnimation];
 }
