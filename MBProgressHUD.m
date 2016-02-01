@@ -5,7 +5,8 @@
 //
 
 #import <tgmath.h>
-#import <IOSShared/IOSShared.h>
+@import IOSShared;
+
 #import "MBProgressHUD.h"
 
 #if __has_feature(objc_arc)
