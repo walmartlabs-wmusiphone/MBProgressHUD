@@ -171,6 +171,9 @@
 					1D104D791ACA36CC00973364 = {
 						CreatedOnToolsVersion = 6.2;
 					};
+					D286A7481518C70F00E13FB8 = {
+						LastSwiftMigration = 0810;
+					};
 				};
 			};
 			buildConfigurationList = D286A7431518C70E00E13FB8 /* Build configuration list for PBXProject "MBProgressHUD" */;
@@ -332,6 +335,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = MBProgressHUD;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = QADeployment;
 		};
@@ -452,6 +456,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = MBProgressHUD;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -464,6 +469,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = MBProgressHUD;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
