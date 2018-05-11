@@ -21,3 +21,9 @@ profile
 
 # AppCode noise
 .idea/
+
+# Ruby
+.ruby-version
+
+# Carthage
+Carthage/Build
